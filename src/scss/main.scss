@@ -1,0 +1,118 @@
+@import '_mixins.scss';
+@import '_colors.scss';
+
+html, body {
+    height: 100%;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+div[name='msg-box'] {
+
+}
+.container {
+    @include flexible ($direction: column, $jContent: flex-start);
+    min-height: 100%;
+    border: 5px solid $main-color;
+    margin: 1em;
+    .header {
+        position: relative;
+        background-color: $header-color;
+        padding: .5em;
+        text-align: center;
+    }
+}
+form[name = 'msg'] {
+    display: flex;
+    background-color: white;
+}
+.btn-send {
+    align-self: flex-end;
+    width: 4em;
+    padding: .5em;
+    border: none;
+    flex-grow: 0;
+}
+.msg-wrapper {
+    padding: .8em;
+    background-color: $msg-wrapper-color;
+    border-radius: 15px;
+}
+textarea {
+    flex-grow: 1;
+}
+.exit {
+    position: absolute;
+    top: 0;
+    margin: 1em;
+    right: 0;
+    cursor: pointer; 
+}
+.divider {
+    border: 1px solid black;
+}
+%content-filds {
+    padding: 1em;
+}
+
+.content {
+    @include flexible($jContent: flex-start);
+    flex-grow: 1;
+    .users {
+        flex-grow: 1;
+        background-color: $users-bkg;
+        @extend %content-filds;
+    }
+    .msg-area {
+        display: flex;
+        @include flexible($direction: column);
+        flex-grow: 3;
+        background-color: $msg-area-bkg;
+        @extend %content-filds;
+    }
+}
+%text-block {
+    border-radius: 1em;
+    padding: .3em 2em;
+}
+.my-msg {
+    display: flex;
+    flex-direction: column;
+    float: right;
+    clear: both;
+    img {
+        align-self: flex-end;
+    }
+    div {
+        padding: .5em;
+        border-radius: .4em;
+        border-top-right-radius: 0;
+        background-color: rgb(231, 218, 140);
+        margin-right: 4em;
+        margin-top: - 2em;
+    }
+}
+.new-msg {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    clear: both;
+    img {
+        align-self: flex-start;
+        transform: scale(-1, 1);
+    }
+    div {
+        padding: .5em;
+        border-radius: .4em;
+        border-top-left-radius: 0;
+        background-color: rgb(145, 216, 155);
+        margin-left: 4em;
+        margin-top: - 2em;
+    }
+}
+.avatar {
+    border-radius: 50%;
+    width: 5em;
+}

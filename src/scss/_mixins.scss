@@ -1,0 +1,8 @@
+@mixin flexible ($direction: row, $jContent: space-between, $wrap: false) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $jContent;
+    @if($wrap) {
+        flex-wrap: $wrap;
+    }
+}
