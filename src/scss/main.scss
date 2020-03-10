@@ -51,6 +51,7 @@ textarea {
     cursor: pointer; 
 }
 .divider {
+    width: 100%;
     border: 1px solid black;
 }
 %content-filds {
@@ -61,6 +62,9 @@ textarea {
     @include flexible($jContent: flex-start);
     flex-grow: 1;
     .users {
+        display: flex;
+        @include flexible($jContent: flex-start, $direction: column);
+        align-items: center;
         flex-grow: 1;
         background-color: $users-bkg;
         @extend %content-filds;
@@ -94,6 +98,10 @@ textarea {
         margin-top: - 2em;
     }
 }
+.added-msg {
+    margin-top: 1em;
+}
+
 .new-msg {
     display: flex;
     flex-direction: column;
@@ -112,7 +120,15 @@ textarea {
         margin-top: - 2em;
     }
 }
+div {
+    img {
+        width: 100%;
+    }
+}
 .avatar {
     border-radius: 50%;
     width: 5em;
+}
+sub {
+    color: #808080;
 }

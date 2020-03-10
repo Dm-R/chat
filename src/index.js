@@ -2,11 +2,9 @@ import './scss/main.scss';
 
 const PubNub = require('pubnub');
 
-let user = {}
+let user = {};
 
 let msgBox = document.querySelector('div[name="msg-box"]');
-
-
 
 // user.name = prompt('What\'s your name?', 'Guest');
 const pubnub = new PubNub({
@@ -15,11 +13,8 @@ const pubnub = new PubNub({
   ssl: true,
 });
 user.uuid = pubnub.getUUID();
-let participant = document.querySelector('.users');
-let img = document.createElement('img');
-img.src = `https://www.robohash.org/${user.uuid}`
-participant.appendChild(img);
-document.querySelector('users').appendChild(participant);
+
+// document.querySelector('users').appendChild(participant);
 pubnub.addListener({
   status: function(statusEvent) {
     if (statusEvent.category === "PNConnectedCategory") {
@@ -40,10 +35,28 @@ pubnub.addListener({
   },
   presence: function(presenceEvent) {
     console.log(presenceEvent);
+    let participant = document.querySelector('.users');
+    console.log(participant);
     if(presenceEvent.action === 'join') {
-      console.log(`${presenceEvent} is connected.`);
+        
+        let block = document.createElement('div');
+        block.className = `${presenceEvent.uuid}`;
+        let img = document.createElement('img');
+        img.src = `https://www.robohash.org/${presenceEvent.uuid}`;
+        block.appendChild(img);
+        block.style.cssText = 'border-radius: 50%; width: 5em; margin-top: 1em; background-color: #808080;';
+        
+        participant.appendChild(block);
+        if(presenceEvent.uuid === user.uuid) {
+          participant.innerHTML += '<p>You</p> </br> <div class="divider"></div><p>joined after You</p>';
+        }else {
+
+        }
     } else if (presenceEvent.action === 'leave') {
-      document.querySelector('.status').innerHTML = 'disconnected';
+      let elmtToRemove = document.querySelector(`.${presenceEvent.uuid}`);
+      if(elmtToRemove !== null) {
+        elmtToRemove.parentNode.removeChild(elmtToRemove);
+      }
     }
   }
 });
@@ -66,8 +79,7 @@ pubnub.hereNow(
       includeState: true
   },
   function(status, response) {
-      console.log(status);
-      console.log(response);
+    
   }
 );
 let unsubscribe = () => {
@@ -95,28 +107,60 @@ let controleHeight = (elmt) => {
 }
 let txt = document.querySelector('textarea');
 txt.addEventListener('keydown', controleHeight('textarea'));
+txt.addEventListener('keypress', {
+  handleEvent(e) {
+    if(e.keyCode === 13) {
+      console.log('enter');
+      let textarea = document.querySelector('textarea');
+      let message = textarea.value;
+      sendMessage(message);
+      textarea.value = '';
+    }
+  }
+});
 
 let msgForm = document.forms.msg;
 msgForm.addEventListener('submit', {
   handleEvent(e) {
     e.preventDefault();
-    let message = e.target['text'].value;
+    let text = e.target['text'];
+    let message = text.value;
     sendMessage(message);
+    text.value = '';
   }
 });
 
-let printMessage = (message) => {
-  let msg = document.createElement('div');
-  let avatar = document.createElement('img');
-  avatar.className = 'avatar';
-  let text = `</br> <div>${message.message.text}</div>`;
-  avatar.src = `https://www.robohash.org/${message.publisher}`;
-  msg.appendChild(avatar);
-  msg.innerHTML += text;
-  if(message.publisher === user.uuid) {
-    msg.className = 'my-msg';
-  }else {
-    msg.className = 'new-msg';
+let printMessage = (() => {
+  let lastPublisher = '';
+  return (message) => {
+    let time = getTime();
+    let text = `</br> <div>${message.message.text} <sub>${time}</sub></div>`;
+    let msg = document.createElement('div');
+    if(message.publisher !== lastPublisher) {
+    let avatar = document.createElement('img');
+    avatar.className = 'avatar';
+    avatar.src = `https://www.robohash.org/${message.publisher}`;
+    msg.appendChild(avatar);
+    }else {
+      msg.classList.add('added-msg');
+    }
+    msg.innerHTML += text;
+    if(message.publisher === user.uuid) {
+      msg.className = 'my-msg ' + msg.className;
+    }else {
+      msg.className = 'new-msg ' + msg.className;
+    }
+    lastPublisher = message.publisher;
+    msgBox.appendChild(msg);
   }
-  msgBox.appendChild(msg);
-};
+})();
+let getTime = () => {
+  let now = new Date();
+  let hours = now.getHours();
+  let mins = now.getMinutes()
+  hours = hours < 10? `0${hours}`: hours;
+  mins = mins < 10 ? `0${mins}`: mins;  
+  let time = `${hours}:${mins}`;
+  console.log(time);
+  return time;
+}
