@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import './scss/main.scss';
 
 const PubNub = require('pubnub');
@@ -19,7 +20,7 @@ const printMessage = (() => {
   let lastPublisher = '';
   return (message) => {
     const time = getTime();
-    const text = `</br> <div>${message.message.text} <sub>${time}</sub></div>`;
+    const text = `</br> <div style=' border: 2px solid red;white-space: pre-wrap; word-wrap: break-word;'><p>${message.message.text}</p> <sub >${time}</sub></div>`;
     const msg = document.createElement('div');
     if (message.publisher !== lastPublisher) {
       const avatar = document.createElement('img');
@@ -81,6 +82,7 @@ pubnub.addListener({
       const elmtToRemove = document.querySelector(`.${presenceEvent.uuid}`);
       if (elmtToRemove !== null) {
         elmtToRemove.parentNode.removeChild(elmtToRemove);
+        console.log(presenceEvent);
       }
     }
   },

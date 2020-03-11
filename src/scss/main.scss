@@ -27,7 +27,6 @@ div[name='msg-box'] {
         position: relative;
         background-color: $header-color;
         height: 7%;
-        padding-top: 1%;
         text-align: center;
     }
 }
@@ -53,7 +52,7 @@ textarea {
 .exit {
     position: absolute;
     top: 0;
-    padding: 1.5em;
+    width: 4em;
     background-color: $exit-color;
     height: 90%;
     right: 0;
@@ -70,20 +69,20 @@ textarea {
 
 .content {
     @include flexible($jContent: flex-start);
-    flex-grow: 0;
+    flex: 1;
     height: 93%;
     .users {
         display: flex;
         @include flexible($jContent: flex-start, $direction: column);
         align-items: center;
-        flex-grow: 1;
+        width: 25%;
         background-color: $users-bkg;
         @extend %content-filds;
     }
     .msg-area {
         display: flex;
         @include flexible($direction: column);
-        flex-grow: 3;
+        width: 75%;
         background-color: $msg-area-bkg;
         @extend %content-filds;
     }
@@ -93,6 +92,7 @@ textarea {
     padding: .3em 2em;
 }
 .my-msg {
+    max-width: 70%;
     position: relative;
     display: flex;
     flex-direction: column;
