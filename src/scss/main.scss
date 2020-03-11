@@ -10,17 +10,24 @@ html, body {
     padding: 0;
 }
 div[name='msg-box'] {
-
+    height: 100%;
+    margin-bottom: 1em;
+    overflow-y: auto;
+}
+.msg-wrapper {
+    max-height: 85%;
+    margin-bottom: 1em;
 }
 .container {
     @include flexible ($direction: column, $jContent: flex-start);
-    min-height: 100%;
+    height: 100%;
     border: 5px solid $main-color;
-    margin: 1em;
+    margin: 0 1em;
     .header {
         position: relative;
         background-color: $header-color;
-        padding: .5em;
+        height: 7%;
+        padding-top: 1%;
         text-align: center;
     }
 }
@@ -35,7 +42,7 @@ form[name = 'msg'] {
     border: none;
     flex-grow: 0;
 }
-.msg-wrapper {
+.input-wrapper {
     padding: .8em;
     background-color: $msg-wrapper-color;
     border-radius: 15px;
@@ -46,9 +53,12 @@ textarea {
 .exit {
     position: absolute;
     top: 0;
-    margin: 1em;
+    padding: 1.5em;
+    background-color: $exit-color;
+    height: 90%;
     right: 0;
-    cursor: pointer; 
+    cursor: pointer;
+    outline: none;
 }
 .divider {
     width: 100%;
@@ -60,7 +70,8 @@ textarea {
 
 .content {
     @include flexible($jContent: flex-start);
-    flex-grow: 1;
+    flex-grow: 0;
+    height: 93%;
     .users {
         display: flex;
         @include flexible($jContent: flex-start, $direction: column);
@@ -82,6 +93,7 @@ textarea {
     padding: .3em 2em;
 }
 .my-msg {
+    position: relative;
     display: flex;
     flex-direction: column;
     float: right;
@@ -97,6 +109,7 @@ textarea {
         margin-right: 4em;
         margin-top: - 2em;
     }
+    
 }
 .added-msg {
     margin-top: 1em;
@@ -120,10 +133,14 @@ textarea {
         margin-top: - 2em;
     }
 }
-div {
-    img {
-        width: 100%;
-    }
+.participant {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 5em; margin-top:
+    1em; background-color: #808080;
+}
+img {
+    width: 100%;
 }
 .avatar {
     border-radius: 50%;
