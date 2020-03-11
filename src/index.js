@@ -20,7 +20,7 @@ const printMessage = (() => {
   let lastPublisher = '';
   return (message) => {
     const time = getTime();
-    const text = `</br> <div style=' border: 2px solid red;white-space: pre-wrap; word-wrap: break-word;'><p>${message.message.text}</p> <sub >${time}</sub></div>`;
+    const text = `</br> <div style='white-space: pre-wrap; word-wrap: break-word;'><p>${message.message.text}</p> <sub >${time}</sub></div>`;
     const msg = document.createElement('div');
     if (message.publisher !== lastPublisher) {
       const avatar = document.createElement('img');
@@ -73,7 +73,7 @@ pubnub.addListener({
       const img = document.createElement('img');
       img.src = `https://www.robohash.org/${presenceEvent.uuid}`;
       block.appendChild(img);
-      block.className = 'participant';
+      block.classList.add('participant');
       participant.appendChild(block);
       if (presenceEvent.uuid === user.uuid) {
         participant.innerHTML += '<p>You</p> </br> <div class="divider"></div><p>joined after You</p>';
@@ -82,7 +82,6 @@ pubnub.addListener({
       const elmtToRemove = document.querySelector(`.${presenceEvent.uuid}`);
       if (elmtToRemove !== null) {
         elmtToRemove.parentNode.removeChild(elmtToRemove);
-        console.log(presenceEvent);
       }
     }
   },
