@@ -42,6 +42,6 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "pubnub": "^4.27.3"
+    "pubnub": "^4.37.0"
   }
 }
